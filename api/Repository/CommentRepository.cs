@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using api.Data;
 using api.Helpers;
 using api.Interfaces;
@@ -45,7 +41,7 @@ namespace api.Repository
         public async Task<List<Comment>> GetAllAsync(CommentQueryObject queryObject)
         {
             var comments = _context.Comments
-            // .Include(a => a.AppUser)
+            .Include(a => a.AppUser)
             .AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(queryObject.Symbol))
@@ -62,7 +58,7 @@ namespace api.Repository
         public async Task<Comment?> GetByIdAsync(int id)
         {
             return await _context.Comments
-            // .Include(a => a.AppUser)
+            .Include(a => a.AppUser)
             .FirstOrDefaultAsync(c => c.Id == id);
         }
 

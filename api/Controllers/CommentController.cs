@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using api.Dtos.Comment;
+using api.Extensions;
+
 // using api.Extensions;
 using api.Helpers;
 using api.Interfaces;
@@ -20,17 +22,17 @@ namespace api.Controllers
     {
         private readonly ICommentRepository _commentRepo;
         private readonly IStockRepository _stockRepo;
-        // private readonly UserManager<AppUser> _userManager;
+        private readonly UserManager<AppUser> _userManager;
         // private readonly IFMPService _fmpService;
         public CommentController(ICommentRepository commentRepo,
-        IStockRepository stockRepo
-        // UserManager<AppUser> userManager,
+        IStockRepository stockRepo,
+        UserManager<AppUser> userManager
         // IFMPService fmpService
         )
         {
             _commentRepo = commentRepo;
             _stockRepo = stockRepo;
-            // _userManager = userManager;
+            _userManager = userManager;
             // _fmpService = fmpService;
         }
 
@@ -86,11 +88,11 @@ namespace api.Controllers
                 }
             }
 
-            // var username = User.GetUsername();
-            // var appUser = await _userManager.FindByNameAsync(username);
+            var username = User.GetUsername();
+            var appUser = await _userManager.FindByNameAsync(username);
 
             var commentModel = commentDto.ToCommentFromCreate(stock.Id);
-            // commentModel.AppUserId = appUser.Id;
+            commentModel.AppUserId = appUser!.Id;
             await _commentRepo.CreateAsync(commentModel);
             return CreatedAtAction(nameof(GetById), new { id = commentModel.Id }, commentModel.ToCommentDto());
         }

@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using api.Data;
 using api.Dtos.Stock;
 using api.Helpers;
@@ -42,9 +38,10 @@ namespace api.Repository
 
         public async Task<List<Stock>> GetAllAsync(QueryObject query)
         {
-            var stocks = _context.Stocks.Include(c => c.Comments)
-            // .ThenInclude(a => a.AppUser)
-            .AsQueryable();
+            var stocks = _context.Stocks
+                .Include(c => c.Comments)
+                .ThenInclude(a => a.AppUser)
+                .AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(query.CompanyName))
             {
@@ -104,6 +101,7 @@ namespace api.Repository
             await _context.SaveChangesAsync();
 
             return existingStock;
+            
         }
     }
 }
