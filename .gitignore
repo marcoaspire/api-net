@@ -1,0 +1,22 @@
+# Ignorar archivos generados por el compilador
+*.class
+*.pyc
+*.swp
+
+# Ignorar archivos de configuración locales
+*.env
+.DS_Store
+
+# Ignorar archivos generados por el compilador
+*.obj
+*.dll
+*.pdb
+
+# Ignorar archivos de configuración locales
+*.user
+*.suo
+*.sln.docstates
+
+# Ignorar la carpeta api/bin y todo su contenido
+api/bin/
+api/obj/
